@@ -1,0 +1,10 @@
+{
+
+    "video": true,
+    "screenshotsFolder": "/Users/karthikkk/report/",
+    "baseUrl":"http://eaapp.somee.com",
+    "env":{
+        "username":"admin"
+    },
+    "projectId": "ysysvz"
+}
