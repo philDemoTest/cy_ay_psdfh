@@ -14,6 +14,6 @@ module.exports = defineConfig({
       return require('./cypress/plugins/index.js')(on, config)
     },
     baseUrl: 'http://eaapp.somee.com',
-    specPattern: 'cypress/e2e/examples/*.{js,jsx,ts,tsx}',
+   // specPattern: 'cypress/e2e/examples/*.{js,jsx,ts,tsx}',
   },
 })
