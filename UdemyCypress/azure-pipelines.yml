@@ -32,26 +32,19 @@ pool:
 
 steps:
 - script: |
-    echo "Contents of the UdemyCypress directory:"
-    dir /b /a $(Build.SourcesDirectory)\UdemyCypress
-    echo "Listing directories in the repository:"
-    dir /b /ad /s $(Build.SourcesDirectory)\*
+    echo "Searching for package.json in the UdemyCypress directory..."
+    dir /s /b $(Build.SourcesDirectory)\UdemyCypress\package.json > temp.txt
+    set /p packageJsonPath=<temp.txt
+    del temp.txt
     
-    for /f %%i in ('dir /b /ad /s $(Build.SourcesDirectory)\*') do (
-      if exist "%%i\$(cypressDirectory)\package.json" (
-        echo "Cypress project found in %%i"
-        set "cypressPath=%%i\$(cypressDirectory)"
-        echo "Cypress path set to: %cypressPath%"
-        if exist "%%i\$(cypressDirectory)\node_modules" (
-          echo "Cypress is already installed in %%i\$(cypressDirectory)"
-          exit /b 0
-        )
-        exit /b 0
-      )
+    if exist "%packageJsonPath%" (
+      echo "package.json found at %packageJsonPath%"
+      set "cypressPath=%packageJsonPath:package.json=%"
+    ) else (
+      echo "Error: package.json not found"
+      exit /b 1
     )
-    echo "Error: Cypress project not found"
-    exit /b 1
-  displayName: 'Find and navigate to Cypress Directory'
+  displayName: 'Find package.json in UdemyCypress Directory'
 
 - script: |
     cd /d "$(cypressPath)"
