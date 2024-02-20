@@ -1,29 +1,3 @@
-# trigger:
-# - main
-
-# pool:
-#   vmImage: 'windows-latest'
-
-# steps:
-# - task: NodeTool@0
-#   inputs:
-#     versionSpec: '14.x'
-#   displayName: 'Install Node.js'
-
-# - script: |
-#     cd UdemyCypress
-#     npm install cypress
-#   displayName: 'Install Cypress Locally'
-
-# - script: |
-#     cd UdemyCypress
-#     npm install
-#   displayName: 'npm install'
-
-# - script: |
-#     cd UdemyCypress
-#     npx cypress run --record --key 97a65ad6-2d3c-4d5d-8794-45d5976bd1b8 --spec cypress/e2e/examples/eaapp.spec.cy.js
-#   displayName: 'Run Cypress Tests'
 trigger:
 - main
 
@@ -31,34 +5,22 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
-- script: |
-    echo "Searching for package.json in the UdemyCypress directory..."
-    dir /s /b $(Build.SourcesDirectory)\UdemyCypress\package.json > temp.txt
-    set /p packageJsonPath=<temp.txt
-    del temp.txt
-    
-    if exist "%packageJsonPath%" (
-      echo "package.json found at %packageJsonPath%"
-      set "cypressPath=%packageJsonPath:package.json=%"
-    ) else (
-      echo "Error: package.json not found"
-      exit /b 1
-    )
-  displayName: 'Find package.json in UdemyCypress Directory'
+- task: NodeTool@0
+  inputs:
+    versionSpec: '14.x'
+  displayName: 'Install Node.js'
 
 - script: |
-    echo "cypressPath is set to: $(cypressPath)"
-    cd /d "$(cypressPath)"
+    cd UdemyCypress
     npm install cypress
   displayName: 'Install Cypress Locally'
 
 - script: |
-    cd /d "$(cypressPath)"
+    cd UdemyCypress
     npm install
   displayName: 'npm install'
 
 - script: |
-    cd /d "$(cypressPath)"
+    cd UdemyCypress
     npx cypress run --record --key 97a65ad6-2d3c-4d5d-8794-45d5976bd1b8 --spec cypress/e2e/examples/eaapp.spec.cy.js
   displayName: 'Run Cypress Tests'
-
