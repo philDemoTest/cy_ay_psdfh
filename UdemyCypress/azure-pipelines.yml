@@ -25,10 +25,10 @@ stages:
       displayName: 'Install Node.js'
 
     - script: |
-         cd UdemyCypress
-         npm install -g cypress
-         cypress verify
-       displayName: 'Install and Verify Cypress'
+        cd UdemyCypress
+        npm install -g cypress
+        cypress verify
+      displayName: 'Install and Verify Cypress'
   
     - script: |
         cd UdemyCypress
