@@ -47,8 +47,8 @@ steps:
   displayName: 'Find package.json in UdemyCypress Directory'
 
 - script: |
-    echo "cypressPath is set to: %cypressPath%"
-    cd /d "%cypressPath%"
+    echo "cypressPath is set to: $(cypressPath)"
+    cd /d "$(cypressPath)"
     npm install cypress
   displayName: 'Install Cypress Locally'
 
