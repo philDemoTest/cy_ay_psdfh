@@ -32,17 +32,17 @@ pool:
 
 steps:
 - script: |
-    cd $(Build.SourcesDirectory)
-    for /D %%d in (*) do (
-      if exist "%%d\$(cypressDirectory)\package.json" (
-        echo "Cypress project found in %%d"
-        set cypressPath=%%d\$(cypressDirectory)
+    for /f %%i in ('dir /b /ad /s $(Build.SourcesDirectory)\*') do (
+      if exist "%%i\$(cypressDirectory)\package.json" (
+        echo "Cypress project found in %%i"
+        cd "%%i\$(cypressDirectory)"
+        set cypressPath=%%i\$(cypressDirectory)
         exit /b 0
       )
     )
     echo "Error: Cypress project not found"
     exit /b 1
-  displayName: 'Find Cypress Directory'
+  displayName: 'Find and navigate to Cypress Directory'
 
 - script: |
     cd $(cypressPath)
@@ -58,4 +58,3 @@ steps:
     cd $(cypressPath)
     npx cypress run --record --key 97a65ad6-2d3c-4d5d-8794-45d5976bd1b8 --spec cypress/e2e/examples/eaapp.spec.cy.js
   displayName: 'Run Cypress Tests'
-
