@@ -32,6 +32,9 @@ pool:
 
 steps:
 - script: |
+    echo "Listing directories in the repository:"
+    dir /b /ad /s $(Build.SourcesDirectory)
+    
     for /f %%i in ('dir /b /ad /s $(Build.SourcesDirectory)\*') do (
       if exist "%%i\$(cypressDirectory)\package.json" (
         echo "Cypress project found in %%i"
