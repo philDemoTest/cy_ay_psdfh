@@ -24,7 +24,7 @@
 #     cd UdemyCypress
 #     npx cypress run --record --key 97a65ad6-2d3c-4d5d-8794-45d5976bd1b8 --spec cypress/e2e/examples/eaapp.spec.cy.js
 #   displayName: 'Run Cypress Tests'
-  trigger:
+trigger:
 - main
 
 pool:
