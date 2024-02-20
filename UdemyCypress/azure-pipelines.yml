@@ -32,8 +32,10 @@ pool:
 
 steps:
 - script: |
+    echo "Contents of the UdemyCypress directory:"
+    dir /b /a $(Build.SourcesDirectory)\UdemyCypress
     echo "Listing directories in the repository:"
-    dir /b /ad /s $(Build.SourcesDirectory)
+    dir /b /ad /s $(Build.SourcesDirectory)\*
     
     for /f %%i in ('dir /b /ad /s $(Build.SourcesDirectory)\*') do (
       if exist "%%i\$(cypressDirectory)\package.json" (
