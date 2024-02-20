@@ -24,9 +24,9 @@ stages:
         versionSpec: '14.x'
       displayName: 'Install Node.js'
 
-  - script: |
-    npm install cypress
-  displayName: 'Install Cypress'
+    - script: |
+        npm install cypress
+      displayName: 'Install Cypress'
   
     - script: |
         cd UdemyCypress
