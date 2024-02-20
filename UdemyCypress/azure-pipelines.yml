@@ -35,8 +35,12 @@ steps:
     for /f %%i in ('dir /b /ad /s $(Build.SourcesDirectory)\*') do (
       if exist "%%i\$(cypressDirectory)\package.json" (
         echo "Cypress project found in %%i"
-        cd "%%i\$(cypressDirectory)"
-        set cypressPath=%%i\$(cypressDirectory)
+        set "cypressPath=%%i\$(cypressDirectory)"
+        echo "Cypress path set to: %cypressPath%"
+        if exist "%%i\$(cypressDirectory)\node_modules" (
+          echo "Cypress is already installed in %%i\$(cypressDirectory)"
+          exit /b 0
+        )
         exit /b 0
       )
     )
@@ -45,16 +49,16 @@ steps:
   displayName: 'Find and navigate to Cypress Directory'
 
 - script: |
-    cd $(cypressPath)
+    cd /d "$(cypressPath)"
     npm install cypress
   displayName: 'Install Cypress Locally'
 
 - script: |
-    cd $(cypressPath)
+    cd /d "$(cypressPath)"
     npm install
   displayName: 'npm install'
 
 - script: |
-    cd $(cypressPath)
+    cd /d "$(cypressPath)"
     npx cypress run --record --key 97a65ad6-2d3c-4d5d-8794-45d5976bd1b8 --spec cypress/e2e/examples/eaapp.spec.cy.js
   displayName: 'Run Cypress Tests'
