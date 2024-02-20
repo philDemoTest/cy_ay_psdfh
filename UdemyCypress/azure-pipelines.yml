@@ -1,0 +1,44 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+stages:
+- stage: CloneRepository
+  displayName: 'Clone Repository'
+  jobs:
+  - job: Clone
+    displayName: 'Clone Repository'
+    steps:
+    - checkout: self
+
+- stage: NpmRestore
+  displayName: 'NPM restore'
+  jobs:
+  - job: NpmInstall
+    displayName: 'Install NPM Package'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '14.x'
+      displayName: 'Install Node.js'
+    - script: |
+        cd UdemyCypress
+        npm install
+      displayName: 'npm install'
+
+- stage: CypressRunTests
+  displayName: 'Cypress Run Tests'
+  jobs:
+  - job: RunCypressTests
+    displayName: 'Run Cypress Tests'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '14.x'
+      displayName: 'Install Node.js'
+    - script: |
+        cd UdemyCypress
+        npx cypress run --record --key 97a65ad6-2d3c-4d5d-8794-45d5976bd1b8 --spec cypress/e2e/examples/eaapp.spec.cy.js
+      displayName: 'Run Cypress Tests'
