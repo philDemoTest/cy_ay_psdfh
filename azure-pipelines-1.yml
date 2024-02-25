@@ -2,6 +2,7 @@ resources:
   pipelines:
   - pipeline: firstPipeline
     source: firstPipeline  # This should be replaced with the name of the AAA pipeline defined in Azure DevOps
+    trigger: true
 
 trigger: none
 
