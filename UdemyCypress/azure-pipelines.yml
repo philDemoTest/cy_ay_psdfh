@@ -59,8 +59,7 @@
 trigger:
 - main
 
-pool:
-  vmImage: 'windows-latest'
+pool: 'TestingPool'
 
 variables:
   cypressPath: ''
